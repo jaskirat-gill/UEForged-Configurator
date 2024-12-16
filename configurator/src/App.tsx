@@ -1,8 +1,7 @@
-import "./App.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Viewport from "./components/Viewport";
 import SidebarComponent from "./components/Sidebar/Sidebar";
-import { VehicleProvider } from "./lib/activeVehicle";
+import { VehicleProvider } from "./contexts/ActiveVehicle";
 function App() {
   return (
     <div>

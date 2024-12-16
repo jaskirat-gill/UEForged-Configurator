@@ -1,7 +1,5 @@
-import { AppSidebar } from "@/components/Sidebar/AppSidebar"
-import {
-  SidebarProvider,
-} from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/Sidebar/AppSidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const SidebarComponent = () => {
   return (
@@ -14,7 +12,7 @@ const SidebarComponent = () => {
     >
       <AppSidebar />
     </SidebarProvider>
-  )
-}
+  );
+};
 
-export default SidebarComponent
+export default SidebarComponent;

@@ -43,11 +43,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const renderEditor = () => {
     switch (activeItem.title.toLowerCase()) {
       case "vehicle":
-        return <VehicleEditor title="Vehicle"/>;
+        return <VehicleEditor title="Vehicle" />;
       case "rims":
-        return <RimsEditor title="Rims"/>;
+        return <RimsEditor title="Rims" />;
       case "tires":
-        return <TiresEditor title="Tires"/>;
+        return <TiresEditor title="Tires" />;
       default:
         return null;
     }
@@ -98,9 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {/* This is the second sidebar */}
       {/* We disable collapsible and let it fill remaining space */}
       <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-        <SidebarContent>
-          {renderEditor()}
-        </SidebarContent>
+        <SidebarContent>{renderEditor()}</SidebarContent>
       </Sidebar>
     </Sidebar>
   );

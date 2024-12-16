@@ -4,9 +4,9 @@ export interface IconProps {
 }
 
 export interface INavIcons {
-    title: string;
-    icon: React.FC<IconProps>;
-    isActive: boolean;
+  title: string;
+  icon: React.FC<IconProps>;
+  isActive: boolean;
 }
 
 export interface VehicleConfig {
@@ -58,7 +58,7 @@ export interface EditorData {
     front_tire_width: number;
     rear_tire_width: number;
     tire_aspectRatio: number;
-  }
+  };
   paint_finishes: string[];
   min_lift: number;
   max_lift: number;

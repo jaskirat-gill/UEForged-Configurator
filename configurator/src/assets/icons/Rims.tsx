@@ -1,9 +1,7 @@
-import { IconProps } from '@/lib/types';
-import React from 'react';
+import { IconProps } from "@/lib/types";
+import React from "react";
 
-
-
-const Rims: React.FC<IconProps> = ({ color = '#FFFFFF', size = 24 }) => {
+const Rims: React.FC<IconProps> = ({ color = "#FFFFFF", size = 24 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -15,30 +15,35 @@ import useVehicleContext from "@/hooks/useVehicleContext";
 
 const RimsEditor = () => {
   const { activeVehicle, updateActiveVehicle } = useVehicleContext();
+  const { rim, rim_color, color } = activeVehicle;
+
+  const handleRimColorChange = (rimColor: string) => {
+    updateActiveVehicle({ rim_color: rimColor });
+  };
+
   return (
     <>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Style</Label>
         <div className="grid grid-cols-2 gap-4 my-2 max-h-96 overflow-y-auto">
-          {Object.entries(MASTER_DATA.wheels.rims).map(([id, rim]) => {
-            const isActive = activeVehicle.rim === id;
-
+          {Object.entries(MASTER_DATA.wheels.rims).map(([id, rimData]) => {
+            const isActive = rim === id;
             return (
               <Card
                 id={id}
                 key={id}
                 onClick={() => updateActiveVehicle({ rim: id })}
-                className={`p-1 transform transition-transform duration-300 hover:scale-105 hover:border-blue-500 ${
+                className={`p-1 transform transition-transform duration-300 hover:scale-105 ${
                   isActive ? "border-2 border-blue-500" : ""
                 }`}
               >
                 <img
-                  src={rim.thumbnail}
-                  alt={rim.name}
+                  src={rimData.thumbnail}
+                  alt={rimData.name}
                   className="w-full h-32 object-cover rounded"
                 />
                 <div className="mt-2 text-center">
-                  {rim.make} {rim.name}
+                  {rimData.make} {rimData.name}
                 </div>
               </Card>
             );
@@ -49,22 +54,20 @@ const RimsEditor = () => {
         <Label className="text-lg">Color</Label>
         <div className="flex space-x-4 my-4">
           {EDITOR_DATA.rim_colors.map((rimColor, index: number) => {
-            const isActive = activeVehicle.rim_color === rimColor.color;
+            const isActive = rim_color === rimColor.color;
             if (rimColor.name === "Body Match") {
-              rimColor.color = activeVehicle.color
+              rimColor.color = color;
             }
             return (
               <TooltipProvider key={index}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Card
-                      className={`w-1/4 h-12 p-1 transform transition-transform duration-300 hover:scale-105 hover:border-blue-500 ${
+                      className={`w-1/4 h-12 p-1 transform transition-transform duration-300 hover:scale-105 ${
                         isActive ? "border-2 border-blue-500" : ""
                       }`}
                       style={{ backgroundColor: rimColor.color }}
-                      onClick={() =>
-                        updateActiveVehicle({ rim_color: rimColor.color })
-                      }
+                      onClick={() => handleRimColorChange(rimColor.color)}
                     ></Card>
                   </TooltipTrigger>
                   <TooltipContent>

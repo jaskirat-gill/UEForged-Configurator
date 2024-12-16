@@ -11,14 +11,28 @@ import { EDITOR_DATA } from "@/lib/data";
 import useVehicleContext from "@/hooks/useVehicleContext";
 
 const TiresEditor = () => {
-  const { updateActiveVehicle } = useVehicleContext()
+  const { activeVehicle, updateActiveVehicle } = useVehicleContext();
+  const { tire_front_width, tire_rear_width } = activeVehicle;
+
+  const handleFrontWidthChange = (value: string) => {
+    updateActiveVehicle({ tire_front_width: value });
+  };
+
+  const handleRearWidthChange = (value: string) => {
+    updateActiveVehicle({ tire_rear_width: value });
+  };
+
   return (
     <>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Front Width</Label>
-        <Select onValueChange={(value) => updateActiveVehicle({ tire_front_width: value})}>
+        <Select onValueChange={handleFrontWidthChange}>
           <SelectTrigger className="my-2">
-            <SelectValue placeholder={EDITOR_DATA.defaults.front_tire_width} />
+            <SelectValue
+              placeholder={
+                tire_front_width || EDITOR_DATA.defaults.front_tire_width
+              }
+            />
           </SelectTrigger>
           <SelectContent>
             {Object.entries(EDITOR_DATA.tire_widths).map(([id, width]) => (
@@ -31,9 +45,13 @@ const TiresEditor = () => {
       </div>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Rear Width</Label>
-        <Select onValueChange={(value) => updateActiveVehicle({ tire_rear_width: value})}>
+        <Select onValueChange={handleRearWidthChange}>
           <SelectTrigger className="my-2">
-            <SelectValue placeholder={EDITOR_DATA.defaults.rear_tire_width} />
+            <SelectValue
+              placeholder={
+                tire_rear_width || EDITOR_DATA.defaults.rear_tire_width
+              }
+            />
           </SelectTrigger>
           <SelectContent>
             {Object.entries(EDITOR_DATA.tire_widths).map(([id, width]) => (
@@ -46,7 +64,11 @@ const TiresEditor = () => {
       </div>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Aspect Ratio</Label>
-        <Select onValueChange={(value) => updateActiveVehicle({ tire_aspectRatio: value})}>
+        <Select
+          onValueChange={(value) =>
+            updateActiveVehicle({ tire_aspectRatio: value })
+          }
+        >
           <SelectTrigger className="my-2">
             <SelectValue placeholder={EDITOR_DATA.defaults.tire_aspectRatio} />
           </SelectTrigger>

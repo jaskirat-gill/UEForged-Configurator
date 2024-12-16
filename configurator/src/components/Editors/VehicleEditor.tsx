@@ -12,20 +12,27 @@ import useVehicleContext from "@/hooks/useVehicleContext";
 
 const VehicleEditor = () => {
   const { activeVehicle, updateActiveVehicle } = useVehicleContext();
+  const { id, color } = activeVehicle;
+
+  const handleModelChange = (value: string) => {
+    updateActiveVehicle({ id: value });
+  };
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateActiveVehicle({ color: e.target.value });
+  };
 
   return (
     <>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Model</Label>
-        <Select onValueChange={(value) => updateActiveVehicle({ id: value })}>
+        <Select onValueChange={handleModelChange}>
           <SelectTrigger className="my-2">
-            <SelectValue
-              placeholder={MASTER_DATA.vehicles[MASTER_DATA.defaults.id].name}
-            />
+            <SelectValue placeholder={MASTER_DATA.vehicles[id].name} />
           </SelectTrigger>
           <SelectContent>
-            {Object.entries(MASTER_DATA.vehicles).map(([id, vehicle]) => (
-              <SelectItem key={id} value={id}>
+            {Object.entries(MASTER_DATA.vehicles).map(([vehicleId, vehicle]) => (
+              <SelectItem key={vehicleId} value={vehicleId}>
                 {vehicle.name}
               </SelectItem>
             ))}
@@ -37,11 +44,9 @@ const VehicleEditor = () => {
         <input
           type="color"
           className="my-2 rounded w-full cursor-pointer h-10 border-none appearance-none"
-          style={{
-            WebkitAppearance: "none",
-          }}
-          value={activeVehicle.color}
-          onChange={(e) => updateActiveVehicle({ color: e.target.value })}
+          style={{ WebkitAppearance: "none" }}
+          value={color}
+          onChange={handleColorChange}
         />
       </div>
       <div className="flex flex-col items-left">
