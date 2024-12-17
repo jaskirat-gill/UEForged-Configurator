@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Viewport from "./components/Viewport";
 import SidebarComponent from "./components/Sidebar/Sidebar";
 import { VehicleProvider } from "./contexts/ActiveVehicle";
+import Temp from "./components/Temp";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
               <SidebarComponent />
             </div>
             <div className="w-3/4">
-              <Viewport />
+              {/* <Viewport /> */}
+              <Temp />
             </div>
           </div>
         </VehicleProvider>

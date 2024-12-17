@@ -2,11 +2,11 @@ import { EditorData, VehicleConfigs } from "./types";
 
 export const MASTER_DATA: VehicleConfigs = {
   defaults: {
-    id: "mercedes_e63",
+    id: "bmw_m4",
     lift: "0",
     color: "#B91818",
     rim: "hre_p200",
-    finish: "High Gloss",
+    finish: 0,
     rim_color: "gloss_black",
     rim_front_diameter: "19",
     rim_rear_diameter: "19",
@@ -15,6 +15,13 @@ export const MASTER_DATA: VehicleConfigs = {
     tire_aspectRatio: "30",
   },
   vehicles: {
+    bmw_m4: {
+      name: "BMW M4",
+      make: "BMW",
+      model: "/bmw_m4.glb",
+      wheel_offset: 0.8,
+      wheelbase: 2.812,
+    },
     mercedes_sls: {
       name: "Mercedes SLS",
       make: "Mercedes",
@@ -92,7 +99,7 @@ export const MASTER_DATA: VehicleConfigs = {
 
 export const EDITOR_DATA: EditorData = {
   defaults: {
-    paint_finish: "High Gloss",
+    paint_finish: "Gloss",
     lift: 0,
     front_rim_diameter: 19,
     rear_rim_diameter: 20,
@@ -101,9 +108,9 @@ export const EDITOR_DATA: EditorData = {
     tire_aspectRatio: 30,
   },
   paint_finishes: [
+    { name: "Gloss", value: 0 },
+    { name: "Satin", value: 0.2 },
     { name: "Matte", value: 0.6 },
-    { name: "High Gloss", value: 0 },
-    { name: "Semi Gloss", value: 0.2 },
   ],
   min_lift: -2,
   max_lift: 5,

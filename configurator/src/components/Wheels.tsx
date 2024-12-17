@@ -1,16 +1,13 @@
 import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleContext from "@/hooks/useVehicleContext";
 import { MASTER_DATA } from "@/lib/data";
-import { useGLTF } from "@react-three/drei";
-import { FC, memo, useEffect, useRef, useMemo, Suspense } from "react";
+import { Model } from "@/lib/utils";
+import { useEffect, useRef, useMemo, Suspense } from "react";
 import { Group } from "three";
 
-const Model: FC<{ path: string }> = memo(({ path, ...props }) => {
-  const { scene } = useGLTF(path);
-  return <primitive object={scene} {...props} />;
-});
 
-const Vehicle = () => {
+
+const Wheels = () => {
   const { activeVehicle } = useVehicleContext();
   const { setObjectMaterials } = useMaterialProperties();
   const vehicle = useRef<Group>(null);
@@ -30,4 +27,4 @@ const Vehicle = () => {
   );
 };
 
-export default Vehicle;
+export default Wheels;

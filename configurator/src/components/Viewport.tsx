@@ -33,13 +33,19 @@ const ViewPort = () => {
           position={[10, 10, 10]}
           angle={0.3}
           penumbra={1}
-          intensity={1}
+          intensity={2} // Increased intensity
           castShadow
         />
         <spotLight
           position={[-10, 10, -10]}
           angle={0.3}
           penumbra={1}
+          intensity={2} // Increased intensity
+          castShadow
+        />
+        <ambientLight intensity={0.5} /> // Added ambient light
+        <directionalLight
+          position={[5, 10, 5]}
           intensity={1}
           castShadow
         />
