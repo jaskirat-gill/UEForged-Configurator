@@ -1,13 +1,28 @@
-import { memo, FC } from "react";
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
+import { DefaultLoadingManager } from "three";
 
-const Model: FC<{ path: string }> = memo(({ path, ...props }) => {
-  const { scene } = useGLTF(path);
-  return <primitive object={scene} {...props} />;
-});
+import Vehicle from "./Vehicle";
 
-const Viewport = () => {
+const ViewPort = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  // Set loaded state based on default loading manager.
+  useEffect(() => {
+    const loadingManager = DefaultLoadingManager;
+    loadingManager.onStart = () => {
+      setIsLoaded(false);
+    };
+    loadingManager.onLoad = () => {
+      setIsLoaded(true);
+    };
+
+    return () => {
+      loadingManager.onStart = undefined;
+      loadingManager.onLoad = () => {};
+    };
+  }, []);
+
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <Canvas camera={{ position: [0, 2, 5] }} dpr={[1, 2]}>
@@ -28,11 +43,11 @@ const Viewport = () => {
           intensity={1}
           castShadow
         />
-        <Model path="/e63.glb" />
+        <Vehicle />
         <OrbitControls enablePan={true} enableRotate={true} />
       </Canvas>
     </div>
   );
 };
 
-export default Viewport;
+export default ViewPort;

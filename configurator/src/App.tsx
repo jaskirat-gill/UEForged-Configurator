@@ -2,15 +2,20 @@ import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Viewport from "./components/Viewport";
 import SidebarComponent from "./components/Sidebar/Sidebar";
 import { VehicleProvider } from "./contexts/ActiveVehicle";
+
 function App() {
   return (
     <div>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <VehicleProvider>
-          <div>
-            <SidebarComponent />
+          <div className="flex w-screen">
+            <div className="w-1/4">
+              <SidebarComponent />
+            </div>
+            <div className="w-3/4">
+              <Viewport />
+            </div>
           </div>
-          <div className="">{/* <Viewport /> */}</div>
         </VehicleProvider>
       </ThemeProvider>
     </div>

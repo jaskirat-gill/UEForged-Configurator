@@ -52,15 +52,15 @@ const VehicleEditor = () => {
       <div className="flex flex-col items-left">
         <Label className="text-lg">Finish</Label>
         <Select
-          onValueChange={(value) => updateActiveVehicle({ finish: value })}
+          onValueChange={(value) => updateActiveVehicle({ finish: parseFloat(value) })}
         >
           <SelectTrigger className="my-2">
             <SelectValue placeholder={EDITOR_DATA.defaults.paint_finish} />
           </SelectTrigger>
           <SelectContent>
             {Object.entries(EDITOR_DATA.paint_finishes).map(([id, finish]) => (
-              <SelectItem key={id} value={id}>
-                {finish}
+              <SelectItem key={id} value={finish.value.toString()}>
+                {finish.name}
               </SelectItem>
             ))}
           </SelectContent>

@@ -13,7 +13,7 @@ export interface VehicleConfig {
   id: string;
   lift: string;
   color: string;
-  finish: string;
+  finish: number;
   rim: string;
   rim_color: string;
   rim_front_diameter: string;
@@ -59,7 +59,10 @@ export interface EditorData {
     rear_tire_width: number;
     tire_aspectRatio: number;
   };
-  paint_finishes: string[];
+  paint_finishes: Array<{
+    name: string;
+    value: number;
+  }>;
   min_lift: number;
   max_lift: number;
   rim_colors: Array<{
