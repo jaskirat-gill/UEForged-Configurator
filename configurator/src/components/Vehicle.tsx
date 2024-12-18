@@ -1,14 +1,9 @@
 import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleContext from "@/hooks/useVehicleContext";
 import { MASTER_DATA } from "@/lib/data";
-import { useGLTF } from "@react-three/drei";
-import { FC, memo, useEffect, useRef, useMemo, Suspense } from "react";
+import { Model } from "@/lib/utils";
+import { useEffect, useRef, useMemo, Suspense } from "react";
 import { Group } from "three";
-
-const Model: FC<{ path: string }> = memo(({ path, ...props }) => {
-  const { scene } = useGLTF(path);
-  return <primitive object={scene} {...props} />;
-});
 
 const Vehicle = () => {
   const { activeVehicle } = useVehicleContext();
@@ -18,6 +13,14 @@ const Vehicle = () => {
   useEffect(() => {
     setObjectMaterials(vehicle.current, activeVehicle.color, activeVehicle.finish, activeVehicle.rim_color);
   }, [activeVehicle.color, activeVehicle.finish, activeVehicle.rim_color, activeVehicle.id, setObjectMaterials]);
+
+  const scalingFactor = useMemo(() => {
+    const desiredWheelbase =
+      (MASTER_DATA.vehicles[activeVehicle.id].actual_wheelbase);
+    const modelWheelbase =
+      MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_front + MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_rear;
+    return desiredWheelbase / modelWheelbase;
+  }, [activeVehicle.id]);
 
   const modelPath = useMemo(() => MASTER_DATA.vehicles[activeVehicle.id].model, [activeVehicle.id]);
 

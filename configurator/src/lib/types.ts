@@ -46,7 +46,10 @@ export interface VehicleData {
   make: string;
   model: string;
   wheel_offset: number;
-  wheelbase: number;
+  model_orgin_to_front: number;
+  model_orgin_to_rear: number;
+  actual_wheelbase: number;
+  steering: number;
 }
 
 export interface EditorData {

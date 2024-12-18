@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import { DefaultLoadingManager } from "three";
+import {
+  Environment,
+  Lightformer,
+  ContactShadows,
+  OrbitControls,
+} from "@react-three/drei";
+import Wheels from "./Wheels";
 
 import Vehicle from "./Vehicle";
 
@@ -24,35 +30,97 @@ const ViewPort = () => {
   }, []);
 
   return (
-    <div style={{ height: "100vh", width: "100%" }}>
-      <Canvas camera={{ position: [0, 2, 5] }} dpr={[1, 2]}>
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <directionalLight position={[-5, 5, 5]} intensity={1} />
-        <spotLight
-          position={[10, 10, 10]}
-          angle={0.3}
-          penumbra={1}
-          intensity={2} // Increased intensity
-          castShadow
+    <Canvas
+      gl={{ logarithmicDepthBuffer: true, antialias: false }}
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 15], fov: 25 }}
+    >
+      <color attach="background" args={["#15151a"]} />
+      <Vehicle />
+      <Wheels />
+      <hemisphereLight intensity={0.5} />
+      <ContactShadows
+        resolution={1024}
+        frames={1}
+        position={[0, -0.21, 0]}
+        scale={15}
+        blur={0.5}
+        opacity={1}
+        far={20}
+      />
+      <mesh
+        scale={4}
+        position={[3, -0.2, -1.5]}
+        rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}
+      >
+        <ringGeometry args={[0.9, 1, 4, 1]} />
+        <meshStandardMaterial color="white" roughness={0.75} />
+      </mesh>
+      <mesh
+        scale={4}
+        position={[-3, -0.2, -1]}
+        rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}
+      >
+        <ringGeometry args={[0.9, 1, 3, 1]} />
+        <meshStandardMaterial color="white" roughness={0.75} />
+      </mesh>
+      {/* We're building a cube-mapped environment declaratively.
+          Anything you put in here will be filmed (once) by a cubemap-camera
+          and applied to the scenes environment, and optionally background. */}
+      <Environment resolution={512}>
+        {/* Ceiling */}
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, -9]}
+          scale={[10, 1, 1]}
         />
-        <spotLight
-          position={[-10, 10, -10]}
-          angle={0.3}
-          penumbra={1}
-          intensity={2} // Increased intensity
-          castShadow
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, -6]}
+          scale={[10, 1, 1]}
         />
-        <ambientLight intensity={0.5} /> // Added ambient light
-        <directionalLight
-          position={[5, 10, 5]}
-          intensity={1}
-          castShadow
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, -3]}
+          scale={[10, 1, 1]}
         />
-        <Vehicle />
-        <OrbitControls enablePan={true} enableRotate={true} />
-      </Canvas>
-    </div>
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, 0]}
+          scale={[10, 1, 1]}
+        />
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, 3]}
+          scale={[10, 1, 1]}
+        />
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, 6]}
+          scale={[10, 1, 1]}
+        />
+        <Lightformer
+          intensity={2}
+          rotation-x={Math.PI / 2}
+          position={[0, 4, 9]}
+          scale={[10, 1, 1]}
+        />
+        {/* Sides */}
+        <Lightformer
+          intensity={2}
+          rotation-y={Math.PI / 2}
+          position={[-50, 2, 0]}
+          scale={[100, 2, 1]}
+        />
+      </Environment>
+      <OrbitControls />
+    </Canvas>
   );
 };
 
