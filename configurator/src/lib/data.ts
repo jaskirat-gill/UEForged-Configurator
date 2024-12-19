@@ -3,16 +3,17 @@ import { EditorData, VehicleConfigs } from "./types";
 export const MASTER_DATA: VehicleConfigs = {
   defaults: {
     id: "bmw_m4",
-    lift: "0",
+    lift: 0,
     color: "#B91818",
     rim: "hre_p200",
     finish: 0,
     rim_color: "gloss_black",
-    rim_front_diameter: "20",
-    rim_rear_diameter: "20",
-    tire_front_width: "255",
-    tire_rear_width: "275",
-    tire_aspectRatio: "30",
+    rim_front_diameter: 20,
+    rim_rear_diameter: 20,
+    tire_front_width: 255,
+    tire_rear_width: 275,
+    tire_aspectRatio: 30,
+    tire: "michelin_pilot_sport_4",
   },
   vehicles: {
     bmw_m4: {
@@ -20,8 +21,7 @@ export const MASTER_DATA: VehicleConfigs = {
       make: "BMW",
       model: "/bmw_m4.glb",
       wheel_offset: 0.62,
-      model_orgin_to_front: 1.1364,
-      model_orgin_to_rear: 0.968234,
+      wheelbase: 2.104,
       actual_wheelbase: 2.857,
       steering: 10,
     },
@@ -69,6 +69,16 @@ export const MASTER_DATA: VehicleConfigs = {
         od: 69.7145,
       },
     },
+    tires: {
+      michelin_pilot_sport_4: {
+        make: 'Michelin',
+        name: 'Michelin',
+        model: '/michelin.glb',
+        width: 0.38, 
+        od: 0.9177,
+        id: 0.7035,
+    },
+    }
   },
 };
 

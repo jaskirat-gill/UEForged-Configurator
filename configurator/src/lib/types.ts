@@ -11,16 +11,17 @@ export interface INavIcons {
 
 export interface VehicleConfig {
   id: string;
-  lift: string;
+  lift: number;
   color: string;
   finish: number;
   rim: string;
   rim_color: string;
-  rim_front_diameter: string;
-  rim_rear_diameter: string;
-  tire_front_width: string;
-  tire_rear_width: string;
-  tire_aspectRatio: string;
+  rim_front_diameter: number;
+  rim_rear_diameter: number;
+  tire_front_width: number;
+  tire_rear_width: number;
+  tire_aspectRatio: number;
+  tire: string;
 }
 
 export interface WheelConfig {
@@ -33,11 +34,21 @@ export interface WheelConfig {
   id?: number;
 }
 
+export interface TireConfig {
+  make: string;
+  name: string;
+  model: string;
+  width: number;
+  od: number;
+  id: number;
+}
+
 export interface VehicleConfigs {
   defaults: VehicleConfig;
   vehicles: Record<string, VehicleData>;
   wheels: {
     rims: Record<string, WheelConfig>;
+    tires: Record<string, TireConfig>;
   };
 }
 
@@ -46,8 +57,7 @@ export interface VehicleData {
   make: string;
   model: string;
   wheel_offset: number;
-  model_orgin_to_front: number;
-  model_orgin_to_rear: number;
+  wheelbase: number;
   actual_wheelbase: number;
   steering: number;
 }

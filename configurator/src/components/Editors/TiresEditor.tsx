@@ -15,11 +15,11 @@ const TiresEditor = () => {
   const { tire_front_width, tire_rear_width } = activeVehicle;
 
   const handleFrontWidthChange = (value: string) => {
-    updateActiveVehicle({ tire_front_width: value });
+    updateActiveVehicle({ tire_front_width: parseFloat(value) });
   };
 
   const handleRearWidthChange = (value: string) => {
-    updateActiveVehicle({ tire_rear_width: value });
+    updateActiveVehicle({ tire_rear_width: parseFloat(value) });
   };
 
   return (
@@ -66,7 +66,7 @@ const TiresEditor = () => {
         <Label className="text-lg">Aspect Ratio</Label>
         <Select
           onValueChange={(value) =>
-            updateActiveVehicle({ tire_aspectRatio: value })
+            updateActiveVehicle({ tire_aspectRatio: parseFloat(value) })
           }
         >
           <SelectTrigger className="my-2">

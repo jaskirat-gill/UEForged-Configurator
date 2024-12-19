@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { useGLTF } from "@react-three/drei";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -15,18 +15,14 @@ interface ModelProps extends React.ComponentPropsWithoutRef<"primitive"> {
 export const Model: FC<ModelProps> = memo(({ path, ...props }) => {
   const { scene } = useGLTF(path);
 
-  useEffect(() => {
-    // Compute the bounding box after the model is loaded
-    const box = new Box3().setFromObject(scene);
-    const size = new Vector3();
-    box.getSize(size);
-    console.log(`Model size for ${path}:`, size);
-  }, [scene, path]);
-
   return <primitive object={scene} {...props} />;
 });
 
+export function getBoundingBox(object: THREE.Object3D) {
+  const box = new Box3().setFromObject(object);
+  const size = new Vector3();
+  box.getSize(size);
+  return { box, size };
+}
+
 export const mmToMeters = (mm: number) => mm * 0.001;
-
-
-

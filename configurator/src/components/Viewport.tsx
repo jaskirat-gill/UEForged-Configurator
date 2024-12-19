@@ -37,7 +37,6 @@ const ViewPort = () => {
     >
       <color attach="background" args={["#15151a"]} />
       <Vehicle />
-      <Wheels />
       <hemisphereLight intensity={0.5} />
       <ContactShadows
         resolution={1024}
