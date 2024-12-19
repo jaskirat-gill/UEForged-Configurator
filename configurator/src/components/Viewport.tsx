@@ -7,8 +7,6 @@ import {
   ContactShadows,
   OrbitControls,
 } from "@react-three/drei";
-import Wheels from "./Wheels";
-
 import Vehicle from "./Vehicle";
 
 const ViewPort = () => {
