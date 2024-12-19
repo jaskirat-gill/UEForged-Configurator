@@ -9,14 +9,14 @@ import { FC, memo, useEffect, useMemo } from "react";
 
 interface WheelsProps {
   offset: number;
-  wheelbase: number;
   axleHeight: number;
 }
 
-const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
+const Wheels: FC<WheelsProps> = memo(({ offset, axleHeight }) => {
   const { setObjectMaterials } = useMaterialProperties();
   const { activeVehicle } = useVehicleContext();
-  const scalingFactor = useVehicleScalingFactor()
+  const scalingFactor = useVehicleScalingFactor();
+  const currentVehicle = MASTER_DATA.vehicles[activeVehicle.id];
   const currentRim = MASTER_DATA.wheels.rims[activeVehicle.rim];
   const {
     color,
@@ -119,11 +119,12 @@ const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
     const rotation = (Math.PI * 90) / 180;
     const steering = (Math.PI * -10) / 180;
     const scaledOffset = offset * scalingFactor;
-    const scaledWheelbase = wheelbase * scalingFactor;
+    const scaledFrontOffset = currentVehicle.origin_to_front * scalingFactor;
+    const scaledRearOffset = currentVehicle.origin_to_rear * scalingFactor;
     return [
       {
         key: "FL",
-        position: [scaledOffset, axleHeight, scaledWheelbase / 2],
+        position: [scaledOffset, axleHeight, scaledFrontOffset],
         rotation: [0, rotation + steering, 0],
         tireGeometry: frontTireGeometry,
         widthScale: widthFrontScale,
@@ -131,7 +132,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
       },
       {
         key: "FR",
-        position: [-scaledOffset, axleHeight, scaledWheelbase / 2],
+        position: [-scaledOffset, axleHeight, scaledFrontOffset],
         rotation: [0, -rotation + steering, 0],
         tireGeometry: frontTireGeometry,
         widthScale: widthFrontScale,
@@ -139,7 +140,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
       },
       {
         key: "RL",
-        position: [scaledOffset, axleHeight, -scaledWheelbase / 2],
+        position: [scaledOffset, axleHeight, -scaledRearOffset],
         rotation: [0, rotation, 0] as [number, number, number],
         tireGeometry: rearTireGeometry,
         widthScale: widthRearScale,
@@ -147,7 +148,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
       },
       {
         key: "RR",
-        position: [-scaledOffset, axleHeight, -scaledWheelbase / 2],
+        position: [-scaledOffset, axleHeight, -scaledRearOffset],
         rotation: [0, -rotation, 0],
         tireGeometry: rearTireGeometry,
         widthScale: widthRearScale,
@@ -157,7 +158,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, wheelbase, axleHeight }) => {
   }, [
     offset,
     axleHeight,
-    wheelbase,
+    currentVehicle,
     frontTireGeometry,
     rearTireGeometry,
     widthFrontScale,

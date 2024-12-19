@@ -8,7 +8,7 @@ const useVehicleScalingFactor = () => {
   const vehicleScalingFactor = useMemo(() => {
     const vehicleData = MASTER_DATA.vehicles[activeVehicle.id];
     const desiredWheelbase = vehicleData.actual_wheelbase;
-    const modelWheelbase = vehicleData.wheelbase;
+    const modelWheelbase = vehicleData.origin_to_front + vehicleData.origin_to_rear;
     return desiredWheelbase / modelWheelbase;
   }, [activeVehicle.id]);
 

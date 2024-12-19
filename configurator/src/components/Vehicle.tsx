@@ -41,12 +41,11 @@ const Vehicle: FC = () => {
   );
 
   const offset = MASTER_DATA.vehicles[id].wheel_offset;
-  const wheelbase = MASTER_DATA.vehicles[id].wheelbase;
 
   return (
     <group name="Vehicle">
       <Body id={id} height={vehicleHeight} color={color} finish={finish} />
-      <Wheels offset={offset} axleHeight={axleHeight} wheelbase={wheelbase} />
+      <Wheels offset={offset} axleHeight={axleHeight} />
     </group>
   );
 };
