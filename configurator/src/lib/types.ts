@@ -77,3 +77,10 @@ export interface EditorData {
   tire_widths: number[];
   tire_aspectRatios: number[];
 }
+
+export interface WheelTransformation {
+  key: string;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: [number, number, number];
+}

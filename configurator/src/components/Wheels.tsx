@@ -1,12 +1,17 @@
 import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleContext from "@/hooks/useVehicleContext";
+import useVehicleScalingFactor from "@/hooks/useVehicleScalingFactor";
 import { MASTER_DATA } from "@/lib/data";
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
+import { WheelTransformation } from "@/lib/types";
 
 const Wheels = () => {
   const { activeVehicle } = useVehicleContext();
   const { setObjectMaterials } = useMaterialProperties();
+  const vehicleScalingFactor = useVehicleScalingFactor();
+  const currentVehicle = MASTER_DATA.vehicles[activeVehicle.id];
+  const rimModel = useGLTF(MASTER_DATA.wheels.rims[activeVehicle.rim].model);
 
   useEffect(() => {
     setObjectMaterials(
@@ -23,74 +28,70 @@ const Wheels = () => {
     setObjectMaterials,
   ]);
 
-  const rimModel = useGLTF(MASTER_DATA.wheels.rims[activeVehicle.rim].model);
-
   // Retrieve the offset value
-  const offset = useMemo(
-    () => MASTER_DATA.vehicles[activeVehicle.id].wheel_offset,
-    [activeVehicle.id]
-  );
+  const offset = useMemo(() => currentVehicle.wheel_offset, [activeVehicle.id]);
 
-  const scalingFactor = useMemo(() => {
+  const frontRimScale = useMemo(() => {
     const desiredDiameterMeters =
-      parseFloat(activeVehicle.rim_rear_diameter) * 0.0254;
-    const modelDiameterMeters =
-      MASTER_DATA.wheels.rims[activeVehicle.rim].width;
-    return desiredDiameterMeters / modelDiameterMeters;
+      parseFloat(activeVehicle.rim_front_diameter) * 0.0254 + 0.03175;
+
+    return (
+      desiredDiameterMeters / MASTER_DATA.wheels.rims[activeVehicle.rim].od
+    );
+  }, [activeVehicle.rim_front_diameter, activeVehicle.rim]);
+
+  const rearRimScale = useMemo(() => {
+    const desiredDiameterMeters =
+      parseFloat(activeVehicle.rim_rear_diameter) * 0.0254 + 0.03175;
+    return (
+      desiredDiameterMeters / MASTER_DATA.wheels.rims[activeVehicle.rim].od
+    );
   }, [activeVehicle.rim_rear_diameter, activeVehicle.rim]);
 
-  const rimTransformations = useMemo(() => {
+  const rimTransformations: WheelTransformation[] = useMemo(() => {
     const rotation = Math.PI / 2;
-    const steering =
-      (Math.PI * -MASTER_DATA.vehicles[activeVehicle.id].steering) / 180;
+    const steering = (Math.PI * -currentVehicle.steering) / 180;
+    const scaledOffset = offset * vehicleScalingFactor;
+    const scaledFrontZ =
+      currentVehicle.model_orgin_to_front * vehicleScalingFactor;
+    const scaledRearZ =
+      currentVehicle.model_orgin_to_rear * vehicleScalingFactor;
     return [
       {
         key: "FL",
-        position: [
-          offset,
-          0,
-          MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_front,
-        ] as [number, number, number],
-        rotation: [0, Math.PI / 2 + steering, 0] as [number, number, number],
+        position: [scaledOffset, 0, scaledFrontZ],
+        rotation: [0, Math.PI / 2 + steering, 0],
+        scale: [frontRimScale, frontRimScale, 1],
       },
       {
         key: "FR",
-        position: [
-          -offset,
-          0,
-          MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_front,
-        ] as [number, number, number],
-        rotation: [0, -rotation + steering, 0] as [number, number, number],
+        position: [-scaledOffset, 0, scaledFrontZ],
+        rotation: [0, -rotation + steering, 0],
+        scale: [frontRimScale, frontRimScale, 1],
       },
       {
         key: "RL",
-        position: [
-          offset,
-          0,
-          MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_rear * -1,
-        ] as [number, number, number],
-        rotation: [0, rotation, 0] as [number, number, number],
+        position: [scaledOffset, 0, scaledRearZ * -1],
+        rotation: [0, rotation, 0],
+        scale: [rearRimScale, rearRimScale, 1],
       },
       {
         key: "RR",
-        position: [
-          -offset,
-          0,
-          MASTER_DATA.vehicles[activeVehicle.id].model_orgin_to_rear * -1,
-        ] as [number, number, number],
-        rotation: [0, -rotation, 0] as [number, number, number],
+        position: [-scaledOffset, 0, scaledRearZ * -1],
+        rotation: [0, -rotation, 0],
+        scale: [rearRimScale, rearRimScale, 1],
       },
     ];
-  }, [offset]);
+  }, [offset, activeVehicle]);
 
   return (
     <group name="wheels">
-      {rimTransformations.map(({ key, position, rotation }) => (
+      {rimTransformations.map(({ key, position, rotation, scale }) => (
         <group key={key}>
           <primitive
             name="Rim"
             object={rimModel.scene.clone()}
-            scale={[scalingFactor, scalingFactor, scalingFactor]}
+            scale={scale}
             position={position}
             rotation={rotation}
           />
