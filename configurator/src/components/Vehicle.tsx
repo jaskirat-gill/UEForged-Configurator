@@ -1,5 +1,4 @@
 import { useMemo, FC } from "react";
-
 import useVehicleContext from "@/hooks/useVehicleContext";
 import { MASTER_DATA } from "@/lib/data";
 import Body from "./Body";
@@ -13,13 +12,8 @@ const Vehicle: FC = () => {
     color,
     finish,
     lift,
-    rim,
-    rim_front_diameter,
     rim_rear_diameter,
-    tire_front_width,
     tire_rear_width,
-    rim_color,
-    tire,
     tire_aspectRatio,
   } = activeVehicle;
 
@@ -52,21 +46,7 @@ const Vehicle: FC = () => {
   return (
     <group name="Vehicle">
       <Body id={id} height={vehicleHeight} color={color} finish={finish} />
-      <Wheels
-        rim={rim}
-        rim_front_diameter={rim_front_diameter}
-        rim_rear_diameter={rim_rear_diameter}
-        rim_front_width={tire_front_width}
-        rim_rear_width={tire_rear_width}
-        rim_color={rim_color}
-        tire={tire}
-        tire_aspectRatio={tire_aspectRatio}
-        offset={offset}
-        axleHeight={axleHeight}
-        wheelbase={wheelbase}
-        color={color}
-        finish={finish}
-      />
+      <Wheels offset={offset} axleHeight={axleHeight} wheelbase={wheelbase} />
     </group>
   );
 };

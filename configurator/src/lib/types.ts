@@ -1,3 +1,5 @@
+import { BufferGeometry, NormalBufferAttributes } from "three";
+
 export interface IconProps {
   color?: string;
   size?: number;
@@ -92,5 +94,7 @@ export interface WheelTransformation {
   key: string;
   position: [number, number, number];
   rotation: [number, number, number];
-  scale: [number, number, number];
+  widthScale: number;
+  odScale: number;
+  tireGeometry: BufferGeometry<NormalBufferAttributes>;
 }
