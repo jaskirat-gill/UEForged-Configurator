@@ -16,8 +16,9 @@ interface BodyProps {
 const Body: FC<BodyProps> = memo(({ id, height, color, finish }) => {
   const vehicle = useRef<Group>(null);
   const { setObjectMaterials } = useMaterialProperties();
+  const scalingFactor = useVehicleScalingFactor();
 
-  // Set body color.
+  // Set body color and scaling factor.
   useEffect(() => {
     if (vehicle.current) {
       setObjectMaterials(vehicle.current, color, finish);
@@ -28,7 +29,9 @@ const Body: FC<BodyProps> = memo(({ id, height, color, finish }) => {
 
   return (
     <group ref={vehicle} name="Body" key={id}>
-      <Model path={MASTER_DATA.vehicles[id].model} />
+      <group scale={[scalingFactor, scalingFactor, scalingFactor]}>
+        <Model path={MASTER_DATA.vehicles[id].model} />
+      </group>
     </group>
   );
 });
