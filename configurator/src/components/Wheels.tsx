@@ -8,11 +8,10 @@ import { useGLTF } from "@react-three/drei";
 import { FC, memo, useEffect, useMemo } from "react";
 
 interface WheelsProps {
-  offset: number;
   axleHeight: number;
 }
 
-const Wheels: FC<WheelsProps> = memo(({ offset, axleHeight }) => {
+const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
   const { setObjectMaterials } = useMaterialProperties();
   const { activeVehicle } = useVehicleContext();
   const scalingFactor = useVehicleScalingFactor();
@@ -79,13 +78,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, axleHeight }) => {
       tire_rear_diameter,
       tire
     );
-  }, [
-    tireGltf,
-    rim_rear_diameter,
-    converted_rim_rear_width,
-    tire,
-    tire_aspectRatio,
-  ]);
+  }, [activeVehicle]);
 
   // Calculate rim scale as a percentage of diameter.
   const odFrontScale = useMemo(
@@ -118,7 +111,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, axleHeight }) => {
   const wheelTransforms: WheelTransformation[] = useMemo(() => {
     const rotation = (Math.PI * 90) / 180;
     const steering = (Math.PI * -10) / 180;
-    const scaledOffset = offset * scalingFactor;
+    const scaledOffset = currentVehicle.wheel_offset * scalingFactor;
     const scaledFrontOffset = currentVehicle.origin_to_front * scalingFactor;
     const scaledRearOffset = currentVehicle.origin_to_rear * scalingFactor;
     return [
@@ -155,17 +148,7 @@ const Wheels: FC<WheelsProps> = memo(({ offset, axleHeight }) => {
         odScale: odRearScale,
       },
     ];
-  }, [
-    offset,
-    axleHeight,
-    currentVehicle,
-    frontTireGeometry,
-    rearTireGeometry,
-    widthFrontScale,
-    widthRearScale,
-    odFrontScale,
-    odRearScale,
-  ]);
+  }, [axleHeight, currentVehicle, activeVehicle]);
 
   return (
     <group name="Wheels">

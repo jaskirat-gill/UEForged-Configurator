@@ -27,6 +27,7 @@ export function getBoundingBox(object: THREE.Object3D) {
 }
 
 export const mmToMeters = (mm: number) => mm * 0.001;
+export const inchToMeters = (inch: number) => inch * 0.0254;
 
 // Calculate point on line (a to b, at length).
 export const linePoint = (a: Vector3, b: Vector3, length: number): Vector3 => {

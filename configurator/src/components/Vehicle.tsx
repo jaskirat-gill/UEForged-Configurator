@@ -1,10 +1,9 @@
 import { useMemo, FC } from "react";
 import useVehicleContext from "@/hooks/useVehicleContext";
-import { MASTER_DATA } from "@/lib/data";
 import Body from "./Body";
 import Wheels from "./Wheels";
+import { inchToMeters, mmToMeters } from "@/lib/utils";
 
-// Vehicle.
 const Vehicle: FC = () => {
   const { activeVehicle } = useVehicleContext();
   const {
@@ -18,20 +17,19 @@ const Vehicle: FC = () => {
   } = activeVehicle;
 
   // Get wheel (axle) height.
-  const axleHeight = useMemo(
-    () =>
-      (((tire_rear_width / 25.4) * (tire_aspectRatio / 100) * 2 +
-        rim_rear_diameter) *
-        2.54) /
-      100 /
-      2,
-    [tire_aspectRatio]
-  );
+  const axleHeight = useMemo(() => {
+    console.log(
+      (mmToMeters(tire_rear_width) * (tire_aspectRatio / 100) * 2 +
+        inchToMeters(rim_rear_diameter)) /
+        2
+    );
+    return 0.1;
+  }, [tire_aspectRatio]);
 
   // Get lift height in meters.
   const liftHeight = useMemo(() => {
-    const liftInches = lift || 0;
-    return (liftInches * 2.54) / 100;
+    console.log("Lift: ", inchToMeters(lift));
+    return inchToMeters(lift);
   }, [lift]);
 
   // Get vehicle height.
@@ -40,12 +38,10 @@ const Vehicle: FC = () => {
     [axleHeight, liftHeight]
   );
 
-  const offset = MASTER_DATA.vehicles[id].wheel_offset;
-
   return (
     <group name="Vehicle">
       <Body id={id} height={vehicleHeight} color={color} finish={finish} />
-      <Wheels offset={offset} axleHeight={axleHeight} />
+      <Wheels axleHeight={axleHeight} />
     </group>
   );
 };
