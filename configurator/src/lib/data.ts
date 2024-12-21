@@ -23,8 +23,8 @@ export const MASTER_DATA: VehicleConfigs = {
       wheel_offset: 0.61,
       origin_to_front: 1.13791,
       origin_to_rear: 0.968938,
-      actual_wheelbase: 2.857,
-      steering: 10,
+      actual_wheelbase: 2.857,  
+      steering: -10,
     },
   },
   wheels: {
@@ -75,9 +75,9 @@ export const MASTER_DATA: VehicleConfigs = {
         make: 'Michelin',
         name: 'Michelin',
         model: '/michelin.glb',
-        width: 0.38, 
-        od: 0.9177,
-        id: 0.7035,
+        width: 0.26, 
+        od: 0.54,
+        id: 0.42,
     },
     }
   },

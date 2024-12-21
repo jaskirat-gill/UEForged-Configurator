@@ -68,7 +68,7 @@ const VehicleEditor = () => {
       </div>
       <div className="flex flex-col items-left">
         <Label className="text-lg">Lift</Label>
-        <Select onValueChange={(value) => updateActiveVehicle({ lift: value })}>
+        <Select onValueChange={(value) => updateActiveVehicle({ lift: parseFloat(value) })}>
           <SelectTrigger className="my-2">
             <SelectValue placeholder={EDITOR_DATA.defaults.lift} />
           </SelectTrigger>

@@ -110,7 +110,7 @@ const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
   // Build wheel transforms for front and rear wheels.
   const wheelTransforms: WheelTransformation[] = useMemo(() => {
     const rotation = (Math.PI * 90) / 180;
-    const steering = (Math.PI * -10) / 180;
+    const steering = (Math.PI * currentVehicle.steering) / 180;
     const scaledOffset = currentVehicle.wheel_offset * scalingFactor;
     const scaledFrontOffset = currentVehicle.origin_to_front * scalingFactor;
     const scaledRearOffset = currentVehicle.origin_to_rear * scalingFactor;

@@ -76,7 +76,7 @@ const TiresEditor = () => {
             {Object.entries(EDITOR_DATA.tire_aspectRatios).map(
               ([id, ratio]) => (
                 <SelectItem key={id} value={ratio.toString()}>
-                  {ratio} mm
+                  {ratio}
                 </SelectItem>
               )
             )}
