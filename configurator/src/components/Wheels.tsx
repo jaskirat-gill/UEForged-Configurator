@@ -3,10 +3,12 @@ import useVehicleContext from "@/hooks/useVehicleContext";
 import useVehicleScalingFactor from "@/hooks/useVehicleScalingFactor";
 import { MASTER_DATA } from "@/lib/data";
 import { WheelTransformation } from "@/lib/types";
-import { scaleTireGeometry } from "@/lib/utils";
+import { inchToMeters, mmToMeters, normalizeGeometry, scaleTireGeometry } from "@/lib/utils";
 import { useGLTF } from "@react-three/drei";
 import { FC, memo, useEffect, useMemo } from "react";
-
+import * as THREE from "three";
+import { Vector3 } from 'three';
+import { linePoint } from "@/lib/utils";
 interface WheelsProps {
   axleHeight: number;
 }
@@ -30,55 +32,43 @@ const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
     tire_aspectRatio,
   } = activeVehicle;
 
-  const converted_rim_front_width = tire_front_width / 25.4;
-  const converted_rim_rear_width = tire_rear_width / 25.4;
-
-  const tire_front_diameter =
-    converted_rim_front_width * (tire_aspectRatio / 100) * 2 +
-    rim_front_diameter;
-  const tire_rear_diameter =
-    converted_rim_rear_width * (tire_aspectRatio / 100) * 2 + rim_rear_diameter;
-
   // Load models.
   const rimGltf = useGLTF(currentRim.model);
   const tireGltf = useGLTF(MASTER_DATA.wheels.tires[tire].model);
 
   // Scale tires for the front and rear.
   const frontTireGeometry = useMemo(() => {
-    // Determine y scale for front tire.
-    const wheelFrontWidth = (converted_rim_front_width * 2.54) / 100;
-    const frontWidthScale =
-      wheelFrontWidth / MASTER_DATA.wheels.tires[tire].width;
+    const mesh = tireGltf.scene.children[0] as THREE.Mesh;
+    const geometry = normalizeGeometry(mesh);
+    const frontTireWidth = mmToMeters(tire_front_width);
+    const frontRimDiameter = inchToMeters(rim_front_diameter);
+    const frontTireDiameter = frontRimDiameter + 2 * (frontTireWidth * (tire_aspectRatio / 100));
 
-    return scaleTireGeometry(
-      tireGltf,
-      frontWidthScale,
-      rim_front_diameter,
-      tire_front_diameter,
-      tire
-    );
+    return scaleTireGeometry(geometry, frontTireWidth, frontRimDiameter, frontTireDiameter, tire);
   }, [
     tireGltf,
     rim_front_diameter,
-    converted_rim_front_width,
+    tire_front_width,
     tire,
     tire_aspectRatio,
   ]);
 
-  const rearTireGeometry = useMemo(() => {
-    // Determine y scale for rear tire.
-    const wheelRearWidth = (converted_rim_rear_width * 2.54) / 100;
-    const rearWidthScale =
-      wheelRearWidth / MASTER_DATA.wheels.tires[tire].width;
+// Scale tires for the front and rear.
+const rearTireGeometry = useMemo(() => {
+    const mesh = tireGltf.scene.children[0] as THREE.Mesh;
+    const geometry = normalizeGeometry(mesh);
+    const rearTireWidth = mmToMeters(tire_rear_width);
+    const rearRimDiameter = inchToMeters(rim_rear_diameter);
+    const rearTireDiameter = rearRimDiameter + 2 * (rearTireWidth * (tire_aspectRatio / 100));
 
-    return scaleTireGeometry(
-      tireGltf,
-      rearWidthScale,
-      rim_rear_diameter,
-      tire_rear_diameter,
-      tire
-    );
-  }, [activeVehicle]);
+    return scaleTireGeometry(geometry, rearTireWidth, rearRimDiameter, rearTireDiameter, tire);
+  }, [
+    tireGltf,
+    rim_rear_diameter,
+    tire_rear_width,
+    tire,
+    tire_aspectRatio,
+  ]);
 
   // Calculate rim scale as a percentage of diameter.
   const odFrontScale = useMemo(

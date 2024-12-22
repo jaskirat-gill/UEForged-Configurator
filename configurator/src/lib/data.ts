@@ -34,7 +34,7 @@ export const MASTER_DATA: VehicleConfigs = {
         name: "P200",
         thumbnail: "/images/hre_p200.png",
         model: "/p200.glb",
-        width: 0.5,
+        width: 0.56,
         od: 1,
       },
       volks_te37: {

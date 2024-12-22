@@ -3,9 +3,10 @@ import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleScalingFactor from "@/hooks/useVehicleScalingFactor";
 import { MASTER_DATA } from "@/lib/data";
 import { Model } from "@/lib/utils";
-import { FC, memo, useEffect, useRef } from "react";
+import { useGLTF } from "@react-three/drei";
+import { FC, memo, useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
-
+import * as THREE from "three";
 interface BodyProps {
   id: string;
   height: number;
