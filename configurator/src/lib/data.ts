@@ -8,7 +8,7 @@ export const MASTER_DATA: VehicleConfigs = {
     rim: "hre_p200",
     finish: 0,
     rim_color: "gloss_black",
-    rim_front_diameter: 20,
+    rim_front_diameter: 19,
     rim_rear_diameter: 20,
     tire_front_width: 255,
     tire_rear_width: 275,
@@ -23,7 +23,7 @@ export const MASTER_DATA: VehicleConfigs = {
       wheel_offset: 0.61,
       origin_to_front: 1.13791,
       origin_to_rear: 0.968938,
-      actual_wheelbase: 2.857,  
+      actual_wheelbase: 2.857,
       steering: -10,
     },
   },
@@ -72,14 +72,14 @@ export const MASTER_DATA: VehicleConfigs = {
     },
     tires: {
       michelin_pilot_sport_4: {
-        make: 'Michelin',
-        name: 'Michelin',
-        model: '/michelin.glb',
-        width: 0.26, 
+        make: "Michelin",
+        name: "Michelin",
+        model: "/michelin.glb",
+        width: 0.26,
         od: 0.54,
         id: 0.42,
+      },
     },
-    }
   },
 };
 
@@ -104,22 +104,27 @@ export const EDITOR_DATA: EditorData = {
     {
       name: "Gloss Black",
       color: "#000000",
+      label: "gloss_black",
     },
     {
       name: "Matte Black",
       color: "#28282B",
+      label: "flat_black",
     },
     {
       name: "Silver",
       color: "#C0C0C0",
+      label: "silver",
     },
     {
       name: "Chrome",
       color: "#D8DBDE",
+      label: "chrome",
     },
     {
       name: "Body Match",
       color: "",
+      label: "body",
     },
   ],
   min_rim_diameter: 14,

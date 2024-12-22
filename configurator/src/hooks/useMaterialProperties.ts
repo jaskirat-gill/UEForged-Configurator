@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Mesh, Color, MeshStandardMaterial, Object3D } from "three";
+import * as THREE from "three";
 
 // Define colors.
 const COLORS = {
@@ -8,6 +9,7 @@ const COLORS = {
   MED_GREY: new Color(0.5, 0.5, 0.5),
   DARK_GREY: new Color(0.2, 0.2, 0.2),
   BLACK: new Color(0.025, 0.025, 0.025),
+  CHROME: new THREE.Color('#CCCCCC')
 };
 
 // Define the material types.
@@ -66,7 +68,6 @@ const setMaterials = (
       material.color?.set(COLORS.BLACK);
       break;
     case material.name.startsWith("rim"):
-      // Switch rim color / secondary rim color.
       switch (rimColor) {
         case "silver":
           material.metalness = 0.6;
@@ -74,8 +75,9 @@ const setMaterials = (
           material.color?.set(COLORS.LIGHT_GREY);
           break;
         case "chrome":
-          material.metalness = 0.8;
+          material.metalness = 0.9;
           material.roughness = 0;
+          material.envMapIntensity = 1;
           material.color?.set(COLORS.WHITE);
           break;
         case "gloss_black":

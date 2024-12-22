@@ -54,7 +54,7 @@ const RimsEditor = () => {
         <Label className="text-lg">Color</Label>
         <div className="flex space-x-4 my-4">
           {EDITOR_DATA.rim_colors.map((rimColor, index: number) => {
-            const isActive = rim_color === rimColor.color;
+            const isActive = rim_color === rimColor.label;
             if (rimColor.name === "Body Match") {
               rimColor.color = color;
             }
@@ -67,7 +67,7 @@ const RimsEditor = () => {
                         isActive ? "border-2 border-blue-500" : ""
                       }`}
                       style={{ backgroundColor: rimColor.color }}
-                      onClick={() => handleRimColorChange(rimColor.color)}
+                      onClick={() => handleRimColorChange(rimColor.label)}
                     ></Card>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -83,12 +83,12 @@ const RimsEditor = () => {
         <Label className="text-lg">Front Diameter</Label>
         <Select
           onValueChange={(value) =>
-            updateActiveVehicle({ rim_front_diameter: value })
+            updateActiveVehicle({ rim_front_diameter: parseFloat(value) })
           }
         >
           <SelectTrigger className="my-2">
             <SelectValue
-              placeholder={EDITOR_DATA.defaults.front_rim_diameter}
+              placeholder={activeVehicle.rim_front_diameter}
             />
           </SelectTrigger>
           <SelectContent>
@@ -115,11 +115,11 @@ const RimsEditor = () => {
         <Label className="text-lg">Rear Diameter</Label>
         <Select
           onValueChange={(value) =>
-            updateActiveVehicle({ rim_rear_diameter: value })
+            updateActiveVehicle({ rim_rear_diameter: parseFloat(value) })
           }
         >
           <SelectTrigger className="my-2">
-            <SelectValue placeholder={EDITOR_DATA.defaults.rear_rim_diameter} />
+            <SelectValue placeholder={activeVehicle.rim_rear_diameter} />
           </SelectTrigger>
           <SelectContent>
             {Array.from(

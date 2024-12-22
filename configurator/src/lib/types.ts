@@ -84,6 +84,7 @@ export interface EditorData {
   rim_colors: Array<{
     name: string;
     color: string;
+    label: string;
   }>;
   min_rim_diameter: number;
   max_rim_diameter: number;

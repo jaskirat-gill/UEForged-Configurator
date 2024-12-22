@@ -7,9 +7,6 @@ import { inchToMeters } from "@/lib/utils";
 const Vehicle: FC = () => {
   const { activeVehicle } = useVehicleContext();
   const {
-    id,
-    color,
-    finish,
     lift,
     tire_aspectRatio,
   } = activeVehicle;
@@ -32,7 +29,7 @@ const Vehicle: FC = () => {
 
   return (
     <group name="Vehicle">
-      <Body id={id} height={vehicleHeight} color={color} finish={finish} />
+      <Body height={vehicleHeight} />
       <Wheels axleHeight={axleHeight} />
     </group>
   );
