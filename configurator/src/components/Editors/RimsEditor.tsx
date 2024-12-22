@@ -10,16 +10,25 @@ import {
 import { Card } from "../ui/card";
 import { Tooltip, TooltipProvider } from "../ui/tooltip";
 import { TooltipContent, TooltipTrigger } from "@radix-ui/react-tooltip";
-import { EDITOR_DATA, MASTER_DATA } from "@/lib/data";
+import { cameraPresets, EDITOR_DATA, MASTER_DATA } from "@/lib/data";
 import useVehicleContext from "@/hooks/useVehicleContext";
+import { useCamera } from "@/contexts/CameraContext";
 
 const RimsEditor = () => {
   const { activeVehicle, updateActiveVehicle } = useVehicleContext();
   const { rim, rim_color, color } = activeVehicle;
+  const cameraRef = useCamera()
 
   const handleRimColorChange = (rimColor: string) => {
     updateActiveVehicle({ rim_color: rimColor });
   };
+
+  const handleRimChange = (rim: string) => {
+    updateActiveVehicle({ rim: rim })
+    if (cameraRef && cameraRef.current) {
+      cameraRef.current.position.set(...cameraPresets.sideProfile);
+    }
+  }
 
   return (
     <>
@@ -32,7 +41,7 @@ const RimsEditor = () => {
               <Card
                 id={id}
                 key={id}
-                onClick={() => updateActiveVehicle({ rim: id })}
+                onClick={() => handleRimChange(id)}
                 className={`p-1 transform transition-transform duration-300 hover:scale-105 ${
                   isActive ? "border-2 border-blue-500" : ""
                 }`}

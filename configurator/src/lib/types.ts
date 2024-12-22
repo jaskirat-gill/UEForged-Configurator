@@ -24,6 +24,7 @@ export interface VehicleConfig {
   tire_rear_width: number;
   tire_aspectRatio: number;
   tire: string;
+  cameraPosition: string;
 }
 
 export interface WheelConfig {
@@ -99,4 +100,8 @@ export interface WheelTransformation {
   widthScale: number;
   odScale: number;
   tireGeometry: BufferGeometry<NormalBufferAttributes>;
+}
+
+export interface CameraPreset {
+  [key:string]: [number, number, number];
 }

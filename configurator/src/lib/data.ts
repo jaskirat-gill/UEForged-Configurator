@@ -1,4 +1,4 @@
-import { EditorData, VehicleConfigs } from "./types";
+import { CameraPreset, EditorData, VehicleConfigs } from "./types";
 
 export const MASTER_DATA: VehicleConfigs = {
   defaults: {
@@ -14,6 +14,7 @@ export const MASTER_DATA: VehicleConfigs = {
     tire_rear_width: 275,
     tire_aspectRatio: 30,
     tire: "michelin_pilot_sport_4",
+    cameraPosition: "threeQuarterView",
   },
   vehicles: {
     bmw_m4: {
@@ -132,3 +133,8 @@ export const EDITOR_DATA: EditorData = {
   tire_widths: [205, 225, 245, 255, 275, 285, 295, 305, 315, 345],
   tire_aspectRatios: [20, 25, 30, 35, 40, 45, 50, 55, 60],
 };
+
+export const cameraPresets: CameraPreset = {
+  threeQuarterView: [10,6,10],
+  sideProfile: [10, 1, 0],
+}
