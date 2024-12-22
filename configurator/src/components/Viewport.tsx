@@ -12,8 +12,10 @@ import { cameraPresets } from "@/lib/data";
 import useVehicleContext from "@/hooks/useVehicleContext";
 import { CameraProvider, useCamera } from '@/contexts/CameraContext';
 
-const ViewPort = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+interface IViewPortProps {
+  setIsLoaded: (isLoaded: boolean) => void;
+}
+const ViewPort = ({ setIsLoaded }: IViewPortProps) => {
   const { activeVehicle } = useVehicleContext();
   const cameraRef = useCamera();
   // Set loaded state based on default loading manager.

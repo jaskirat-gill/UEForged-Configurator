@@ -6,11 +6,12 @@ const SidebarComponent = () => {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "350px",
+          "--sidebar-width": "375px",
         } as React.CSSProperties
       }
     >
       <AppSidebar />
+
     </SidebarProvider>
   );
 };
