@@ -10,25 +10,20 @@ import {
 import { Card } from "../ui/card";
 import { Tooltip, TooltipProvider } from "../ui/tooltip";
 import { TooltipContent, TooltipTrigger } from "@radix-ui/react-tooltip";
-import { cameraPresets, EDITOR_DATA, MASTER_DATA } from "@/lib/data";
+import { EDITOR_DATA, MASTER_DATA } from "@/lib/data";
 import useVehicleContext from "@/hooks/useVehicleContext";
-import { useCamera } from "@/contexts/CameraContext";
 
 const RimsEditor = () => {
   const { activeVehicle, updateActiveVehicle } = useVehicleContext();
   const { rim, rim_color, color } = activeVehicle;
-  const cameraRef = useCamera()
 
   const handleRimColorChange = (rimColor: string) => {
     updateActiveVehicle({ rim_color: rimColor });
   };
 
   const handleRimChange = (rim: string) => {
-    updateActiveVehicle({ rim: rim })
-    if (cameraRef && cameraRef.current) {
-      cameraRef.current.position.set(...cameraPresets.sideProfile);
-    }
-  }
+    updateActiveVehicle({ rim: rim });
+  };
 
   return (
     <>
@@ -96,9 +91,7 @@ const RimsEditor = () => {
           }
         >
           <SelectTrigger className="my-2">
-            <SelectValue
-              placeholder={activeVehicle.rim_front_diameter}
-            />
+            <SelectValue placeholder={activeVehicle.rim_front_diameter} />
           </SelectTrigger>
           <SelectContent>
             {Array.from(

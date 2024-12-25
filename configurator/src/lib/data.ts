@@ -27,6 +27,16 @@ export const MASTER_DATA: VehicleConfigs = {
       actual_wheelbase: 2.857,
       steering: -10,
     },
+    corvette_c7_zo6: {
+      name: "Corvette C7 ZO6",
+      make: "Chevrolet",
+      model: "/c7_zo6.glb",
+      wheel_offset: 4.5,
+      origin_to_front: 7.82019,
+      origin_to_rear: 7.72217,
+      actual_wheelbase: 2.7178,
+      steering: 0,
+    },
   },
   wheels: {
     rims: {
@@ -137,4 +147,11 @@ export const EDITOR_DATA: EditorData = {
 export const cameraPresets: CameraPreset = {
   threeQuarterView: [10,6,10],
   sideProfile: [10, 1, 0],
+}
+
+export const MATERIALS = {
+  chrome: {
+    path: "/chrome.glb",
+    name: "AR3DMat PBR Shiny Chrome",
+  }
 }
