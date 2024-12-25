@@ -1,5 +1,6 @@
 import { CameraPreset, EditorData, VehicleConfigs } from "./types";
 
+export const LOGO = "/images/logo.png";
 export const MASTER_DATA: VehicleConfigs = {
   defaults: {
     id: "bmw_m4",
@@ -20,7 +21,7 @@ export const MASTER_DATA: VehicleConfigs = {
     bmw_m4: {
       name: "BMW M4",
       make: "BMW",
-      model: "/bmw_m4.glb",
+      model: "models/bmw_m4.glb",
       wheel_offset: 0.61,
       origin_to_front: 1.13791,
       origin_to_rear: 0.968938,
@@ -30,7 +31,7 @@ export const MASTER_DATA: VehicleConfigs = {
     corvette_c7_zo6: {
       name: "Corvette C7 ZO6",
       make: "Chevrolet",
-      model: "/c7_zo6.glb",
+      model: "models/c7_zo6.glb",
       wheel_offset: 4.5,
       origin_to_front: 7.82019,
       origin_to_rear: 7.72217,
@@ -44,7 +45,7 @@ export const MASTER_DATA: VehicleConfigs = {
         make: "HRE",
         name: "P200",
         thumbnail: "/images/hre_p200.png",
-        model: "/p200.glb",
+        model: "rims/p200.glb",
         width: 0.56,
         od: 1,
       },
@@ -52,7 +53,7 @@ export const MASTER_DATA: VehicleConfigs = {
         make: "Volks",
         name: "TE37",
         thumbnail: "/images/volks_te37.jpg",
-        model: "/te37.glb",
+        model: "rims/te37.glb",
         width: 3.13868,
         od: 6.28967,
       },
@@ -85,7 +86,7 @@ export const MASTER_DATA: VehicleConfigs = {
       michelin_pilot_sport_4: {
         make: "Michelin",
         name: "Michelin",
-        model: "/michelin.glb",
+        model: "/tires/michelin.glb",
         width: 0.26,
         od: 0.54,
         id: 0.42,
