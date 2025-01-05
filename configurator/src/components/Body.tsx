@@ -3,8 +3,8 @@ import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleContext from "@/hooks/useVehicleContext";
 import useVehicleScalingFactor from "@/hooks/useVehicleScalingFactor";
 import { MASTER_DATA } from "@/lib/data";
-import { Model } from "@/lib/utils";
 import { FC, memo, useEffect, useRef } from "react";
+import Model from "./Model";
 import { Group } from "three";
 interface BodyProps {
   height: number;

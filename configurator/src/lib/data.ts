@@ -1,6 +1,8 @@
 import { CameraPreset, EditorData, VehicleConfigs } from "./types";
 
+export const BACKENDURL = import.meta.env.VITE_BACKEND_URL as string || "http://localhost:3000/";
 export const LOGO = "/images/logo.png";
+
 export const MASTER_DATA: VehicleConfigs = {
   defaults: {
     id: "bmw_m4",
@@ -21,7 +23,7 @@ export const MASTER_DATA: VehicleConfigs = {
     bmw_m4: {
       name: "BMW M4",
       make: "BMW",
-      model: "models/bmw_m4.glb",
+      model: "models/bmw_m4_encrypted.glb",
       wheel_offset: 0.61,
       origin_to_front: 1.13791,
       origin_to_rear: 0.968938,
@@ -31,7 +33,7 @@ export const MASTER_DATA: VehicleConfigs = {
     corvette_c7_zo6: {
       name: "Corvette C7 ZO6",
       make: "Chevrolet",
-      model: "models/c7_zo6.glb",
+      model: "models/c7_zo6_encrypted.glb",
       wheel_offset: 4.5,
       origin_to_front: 7.82019,
       origin_to_rear: 7.72217,
