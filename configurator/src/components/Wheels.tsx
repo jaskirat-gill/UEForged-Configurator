@@ -1,4 +1,3 @@
-import useMaterialProperties from "@/hooks/useMaterialProperties";
 import useVehicleContext from "@/hooks/useVehicleContext";
 import useVehicleScalingFactor from "@/hooks/useVehicleScalingFactor";
 import { MASTER_DATA } from "@/lib/data";
@@ -10,34 +9,30 @@ import {
   scaleTireGeometry,
 } from "@/lib/utils";
 import { useGLTF } from "@react-three/drei";
-import { FC, memo, useEffect, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 import * as THREE from "three";
+import Model from "./Model";
 
 interface WheelsProps {
   axleHeight: number;
 }
 
 const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
-  const { setObjectMaterials } = useMaterialProperties();
   const { activeVehicle } = useVehicleContext();
   const scalingFactor = useVehicleScalingFactor();
   const currentVehicle = MASTER_DATA.vehicles[activeVehicle.id];
   const currentRim = MASTER_DATA.wheels.rims[activeVehicle.rim];
   const {
-    color,
-    finish,
     rim,
     rim_front_diameter,
     rim_rear_diameter,
     tire_front_width,
     tire_rear_width,
-    rim_color,
     tire,
     tire_aspectRatio,
   } = activeVehicle;
 
   // Load models.
-  const rimGltf = useGLTF(currentRim.model);
   const tireGltf = useGLTF(MASTER_DATA.wheels.tires[tire].model);
 
   // Scale tires for the front and rear.
@@ -47,7 +42,7 @@ const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
     const frontTireWidth = mmToMeters(tire_front_width);
     const frontRimDiameter = inchToMeters(rim_front_diameter);
     const frontTireDiameter =
-      frontRimDiameter + (2 * (frontTireWidth * (tire_aspectRatio / 100)));
+      frontRimDiameter + 2 * (frontTireWidth * (tire_aspectRatio / 100));
 
     return scaleTireGeometry(
       geometry,
@@ -98,11 +93,6 @@ const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
     [rim, tire_rear_width]
   );
 
-  // Set rim color.
-  useEffect(() => {
-    setObjectMaterials(rimGltf.scene, color, finish, rim_color);
-  }, [rimGltf.scene, setObjectMaterials, rim_color, color, finish]);
-
   // Build wheel transforms for front and rear wheels.
   const wheelTransforms: WheelTransformation[] = useMemo(() => {
     const rotation = (Math.PI * 90) / 180;
@@ -151,10 +141,11 @@ const Wheels: FC<WheelsProps> = memo(({ axleHeight }) => {
       {wheelTransforms.map(
         ({ key, position, rotation, tireGeometry, widthScale, odScale }) => (
           <group key={key} position={position} rotation={rotation}>
-            <primitive
-              name="Rim"
-              object={rimGltf.scene.clone()}
+            <Model
+              path={currentRim.model}
               scale={[odScale, odScale, widthScale / 25.4]}
+              name="Rim"
+              isRim={true}
             />
             <mesh name="Tire" geometry={tireGeometry} castShadow>
               <meshStandardMaterial color="#121212" />

@@ -1,14 +1,23 @@
 import { FC, memo, useEffect, useState } from "react";
 import { BACKENDURL } from "@/lib/data";
 import { useGLTF } from "@react-three/drei";
+import useMaterialProperties from "@/hooks/useMaterialProperties";
+import useVehicleContext from "@/hooks/useVehicleContext";
 interface ModelProps extends React.ComponentPropsWithoutRef<"primitive"> {
   path: string;
 }
 
 const Model: FC<ModelProps> = memo(({ path, ...props }) => {
-  const [url, setUrl] = useState<string | null>(null);
+  const [url, setUrl] = useState<string>("");
   const algorithm = import.meta.env.VITE_ENCRYPTION_ALGORITHM;
   const secretKey = import.meta.env.VITE_SECRET_KEY;
+  const { setObjectMaterials } = useMaterialProperties();
+  const { activeVehicle } = useVehicleContext();
+  const {
+    color,
+    finish,
+    rim_color,
+  } = activeVehicle;
 
   useEffect(() => {
     const fetchAndDecryptModel = async () => {
@@ -50,13 +59,20 @@ const Model: FC<ModelProps> = memo(({ path, ...props }) => {
     fetchAndDecryptModel();
   }, [path]);
 
-  if (!url) {
+  const { scene } = url ? useGLTF(url) : { scene: null };
+
+  useEffect(() => {
+    if (scene) {
+      setObjectMaterials(scene, color, finish, rim_color);
+    }
+  }, [scene, setObjectMaterials, rim_color, color, finish]);
+  
+  if (!url || !scene) {
     return null;
   }
-  const { scene } = useGLTF(url);
 
   return (
-    <primitive object={scene} {...props} />
+    <primitive object={scene.clone()} {...props} />
   )
 });
 
